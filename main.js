@@ -1,22 +1,20 @@
-const date = new Date()
+const time = new Date()
 
-const time = `${date.getHours()}:${formatDate(date.getMinutes())}`
-document.getElementById('time').innerText = time
+const hour = `${time.getHours()}:${formatDate(time.getMinutes())}`
+document.getElementById('time').innerText = hour
 
-const dayMonth = `${formatDate(date.getDate())}/${formatDate(date.getMonth())}`
-document.getElementById('date').innerText = dayMonth
-
+const date = `${formatDate(time.getDate())}/${formatDate(time.getMonth())}`
+document.getElementById('date').innerText = date
 
 function formatDate(date = 4) {
-    if (date.toString().length === 1) {
+    if (date.toString().length === 1)
         return '0' + date
-    }
 
     return date
 }
 
 // change the wallpaper, according to the time
-const hours = date.getHours()
+const hours = time.getHours()
 
 // night
 if (hours >= 0 && hours <= 4) {
