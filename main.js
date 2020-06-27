@@ -42,6 +42,12 @@ else if (hours >= 19 && hours <= 23) {
 }
 
 function search() {
-    const search = document.getElementById('search')
-    window.location = `https://www.google.com/search?q=${search.value}`
+    let searchValue = document.getElementById('search').value
+
+    // if the user types something like 'github.com', it doesn't search for 'github.com' on google, instead, it goes to github.com
+    if (searchValue.includes('.com')) {
+        window.location = `https://${searchValue}`
+    } else {
+        window.location = `https://www.google.com/search?q=${searchValue}`
+    }
 }
