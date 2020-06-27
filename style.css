@@ -1,0 +1,17 @@
+
+
+h1#time {
+    color: white;
+    text-align: right;
+    margin-top: 0%;
+    margin: 5% 5% 0% 0%;
+    font-family: 'Baumans';
+    font-size: 156px;
+    padding: 0%;
+}
+
+h1#date {
+    color: white;
+    text-align: right;
+    margin: -2% 6% 0% 0%;
+}
