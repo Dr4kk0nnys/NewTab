@@ -13,3 +13,17 @@ h1#date {
     text-align: right;
     margin: -2% 6% 0% 0%;
 }
+
+input#search {
+    width: 550px;
+    margin-left: 30%;
+    height: 50px;
+    border: none;
+    border-radius: 50px;
+    outline: none;
+    opacity: 0.3;
+    transition: 1.2s;
+    color: black;
+    font: bold 20px Chilanka;
+    text-align: center;
+}

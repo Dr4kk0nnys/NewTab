@@ -40,3 +40,8 @@ else if (hours >= 17 && hours <= 18) {
 else if (hours >= 19 && hours <= 23) {
     document.body.style.backgroundImage = "url('./images/almostNight.jpg')"
 }
+
+function search() {
+    const search = document.getElementById('search')
+    window.location = `https://www.google.com/search?q=${search.value}`
+}
