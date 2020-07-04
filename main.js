@@ -55,6 +55,14 @@ class NewTab {
     handleSearch() {
         let searchValue = document.getElementById('search').value
 
+        // pages/shortcuts/main.js
+        const shortcuts = localStorage.getItem('shortcutsDatabase').split(',')
+
+        if (shortcuts.includes(searchValue)) {
+            const index = shortcuts.indexOf(searchValue) + 1
+            window.location = `https://${shortcuts[index]}`
+        }
+        /*
         // if the user types something like 'github.com', it doesn't search for 'github.com' on google, instead, it goes to github.com
         if (searchValue.includes('.com')) {
             window.location = `https://${searchValue}`
@@ -65,6 +73,7 @@ class NewTab {
         else {
             window.location = `https://www.google.com/search?q=${searchValue}`
         }
+        */
     }
 }
 
