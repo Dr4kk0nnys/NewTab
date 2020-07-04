@@ -1,53 +1,71 @@
-const time = new Date()
+// import path from 'path'
 
-const hour = `${time.getHours()}:${formatDate(time.getMinutes())}`
-document.getElementById('time').innerText = hour
+class NewTab {
 
-const date = `${formatDate(time.getDate())}/${formatDate(time.getMonth())}`
-document.getElementById('date').innerText = date
+    constructor() {
+        this.time = new Date()
 
-function formatDate(date = 4) {
-    if (date.toString().length === 1)
-        return '0' + date
+        this.handleTime()
+        this.handleWallpaper()
 
-    return date
-}
+    }
 
-// change the wallpaper, according to the time
-const hours = time.getHours()
+    handleTime() {
+        const hours = this.time.getHours()
+        const minutes = this.time.getMinutes()
 
-// night
-if (hours >= 0 && hours <= 4) {
-    document.body.style.backgroundImage = "url('./images/night.jpg')"
-}
-// dawn
-else if (hours >= 5 && hours <= 7) {
-    document.body.style.backgroundImage = "url('./images/dawn.jpg')"
-}
-// day
-else if (hours >= 8 && hours <= 12) {
-    document.body.style.backgroundImage = "url('./images/day.jpg')"
-}
-// afternoon
-else if (hours >= 13 && hours <= 16) {
-    document.body.style.backgroundImage = "url('./images/afternoon.jpg')"
-}
-// sunset
-else if (hours >= 17 && hours <= 18) {
-    document.body.style.backgroundImage = "url('./images/sunset.jpg')"
-}
-// almost night again
-else if (hours >= 19 && hours <= 23) {
-    document.body.style.backgroundImage = "url('./images/almostNight.jpg')"
-}
+        const formattedTime = `${hours}:${this.formatDate(minutes)}`
+        document.getElementById('time').innerText = formattedTime
 
-function search() {
-    let searchValue = document.getElementById('search').value
+        const date = this.time.getDate()
+        const month = this.time.getMonth() + 1 // getMonth is 0~11 index
 
-    // if the user types something like 'github.com', it doesn't search for 'github.com' on google, instead, it goes to github.com
-    if (searchValue.includes('.com')) {
-        window.location = `https://${searchValue}`
-    } else {
-        window.location = `https://www.google.com/search?q=${searchValue}`
+        const formattedDate = `${this.formatDate(date)}/${this.formatDate(month)}`
+        document.getElementById('date').innerText = formattedDate
+    }
+
+    formatDate(date = 4) {
+        // date = 4, returns 04
+        if (date.toString().length === 1)
+            return '0' + date
+
+        return date
+    }
+
+    handleWallpaper() {
+        const hours = this.time.getHours()
+        const imagePath = '../images/'
+
+        if (hours < 5) {
+            document.body.style.backgroundImage = "url('./images/night.jpg')"
+        } else if (hours < 7) {
+            document.body.style.backgroundImage = "url('./images/dawn.jpg')"
+        } else if (hours < 15) {
+            // document.body.style.backgroundImage = `url('${path.join(__dirname)}/images/day.jpg')`
+            document.body.style.backgroundImage = "url('./images/day.jpg')"
+        } else if (hours < 17) {
+            document.body.style.backgroundImage = "url('./images/afternoon.jpg')"
+        } else if (hours < 19) {
+            document.body.style.backgroundImage = "url('./images/sunset.jpg')"
+        } else if (hours <= 23) {
+            document.body.style.backgroundImage = "url('./images/almostNight.jpg')"
+        }
+    }
+
+    handleSearch() {
+        let searchValue = document.getElementById('search').value
+
+        // if the user types something like 'github.com', it doesn't search for 'github.com' on google, instead, it goes to github.com
+        if (searchValue.includes('.com')) {
+            window.location = `https://${searchValue}`
+        }
+        else if (searchValue == '--shortcuts') {
+            location.href = 'pages/shortcuts/index.html'
+        }
+        else {
+            window.location = `https://www.google.com/search?q=${searchValue}`
+        }
     }
 }
+
+new NewTab()
