@@ -14,3 +14,22 @@ How to use:
     - path should be something like:
         'file:///home/User/Documents/NewTab'
         * I'm on linux *
+
+* Shortcuts *
+    - type '--shortcuts' to go to the shortcuts page
+
+    - There is two buttons; the add shortcut one, and the remove shortcut
+    
+    - adding a shortcut, you have to add two parameters:
+        - prefix ( the value you are actually going to type )
+            - such as: 'yt', 'gb', 'fb'
+        - url ( the thing the searcher is going to search for )
+            - such as 'youtube.com', 'github.com', 'facebook.com'
+
+    * once added the shortcut, you can see them on a list type *
+    -> and then type the shortcut's prefix, and then the searcher is going to get the url
+    
+    example:
+        add a 'prefix: "yt", url: "youtube.com"'
+        type 'yt' on the searcher
+        the searcher is going to go to the youtube.com
