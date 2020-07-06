@@ -1,5 +1,3 @@
-// import path from 'path'
-
 class NewTab {
 
     constructor() {
@@ -14,65 +12,105 @@ class NewTab {
         const hours = this.time.getHours()
         const minutes = this.time.getMinutes()
 
-        const formattedTime = `${hours}:${this.formatDate(minutes)}`
+        const formattedTime = `${hours}:${this.formatTime(minutes)}`
         document.getElementById('time').innerText = formattedTime
 
         const date = this.time.getDate()
         const month = this.time.getMonth() + 1 // getMonth is 0~11 index
 
-        const formattedDate = `${this.formatDate(date)}/${this.formatDate(month)}`
+        const formattedDate = `${this.formatTime(date)}/${this.formatTime(month)}`
         document.getElementById('date').innerText = formattedDate
     }
 
-    formatDate(date = 4) {
+    formatTime(time = 4) {
         // date = 4, returns 04
-        if (date.toString().length === 1)
-            return '0' + date
+        if (time.toString().length === 1)
+            return '0' + time
 
-        return date
+        return time
     }
 
     handleWallpaper() {
         const hours = this.time.getHours()
-        const imagePath = '../images/'
+
+        function setBackgroundImage(imageName = 'night.jpg)') {
+            document.body.style.backgroundImage = `url(./images/${imageName})`
+        }
 
         if (hours < 5) {
-            document.body.style.backgroundImage = "url('./images/night.jpg')"
+            setBackgroundImage('night.jpg')
         } else if (hours < 7) {
-            document.body.style.backgroundImage = "url('./images/dawn.jpg')"
+            setBackgroundImage('dawn.jpg')
         } else if (hours < 15) {
-            // document.body.style.backgroundImage = `url('${path.join(__dirname)}/images/day.jpg')`
-            document.body.style.backgroundImage = "url('./images/day.jpg')"
+            setBackgroundImage('day.jpg')
         } else if (hours < 17) {
-            document.body.style.backgroundImage = "url('./images/afternoon.jpg')"
+            setBackgroundImage('afternoon.jpg')
         } else if (hours < 19) {
-            document.body.style.backgroundImage = "url('./images/sunset.jpg')"
+            setBackgroundImage('sunset.jpg')
         } else if (hours <= 23) {
-            document.body.style.backgroundImage = "url('./images/almostNight.jpg')"
+            setBackgroundImage('almostNight.jpg')
         }
     }
 
     handleSearch() {
-        let searchValue = document.getElementById('search').value
+        const searchValue = document.getElementById('search').value
 
-        // pages/shortcuts/main.js
+        // './pages/shortcuts/main.js'
         const shortcuts = localStorage.getItem('shortcutsDatabase').split(',')
 
-        if (shortcuts.includes(searchValue)) {
-            const index = shortcuts.indexOf(searchValue) + 1
-            return window.location = `https://${shortcuts[index]}`
+        function formatUrl(url = 'https://www.google.com/') {
+            if (url.includes('https://')) {
+
+                // already formatted
+                if (url.includes('.com')) return url
+
+                // https:// {...}.com
+                return url + '.com'
+
+            } else if (!url.includes('https://') && url !== '--shortcuts') {
+
+                /*
+                    * - Having trouble with the shortcuts ? - *
+                    * feel free to increment the protocols array with any protocol you want
+
+                    * documentation:
+                        * https://tools.ietf.org/html/rfc920
+                        * https://en.wikipedia.org/wiki/Generic_top-level_domain
+                        * https://www.howtogeek.com/126670/the-difference-between-.com-.net-.org-and-why-were-about-to-see-many-more-top-level-domains/
+                        * http://www.domainregistrationweb.com/comorg.html
+                        * 
+
+                    * if the url = 'github.com', it goes to github.com, instead of searching for 'github.com' on google
+                    * it loops through the array of protocols, and if found any, it's already formatted
+                */
+                const protocols = ['.com', '.net', '.org', '.info', '.gov', '.mil']
+                if (protocols.some(protocol => url.includes(protocol))) {
+                    return 'https://' + url
+                }
+
+                // if the user wants to do a normal search
+                return `https://www.google.com/search?q=${url}`
+            }
+
+            return 'pages/shortcuts/index.html'
         }
 
-        // if the user types something like 'github.com', it doesn't search for 'github.com' on google, instead, it goes to github.com
-        if (searchValue.includes('.com')) {
-            window.location = `https://${searchValue}`
+        // if the user typed a shortcut
+        if (shortcuts.includes(searchValue)) {
+            const index = shortcuts.indexOf(searchValue) + 1
+
+            /* Bug correction
+                * it might happen the user typed the entire url
+                * in this case, without the if statement, it would return the next shortcut of the array
+                * the href would be something like: 'gg'
+                * with the if statement, if the user typed the entire url of a previously added shortcut, it won't search for it
+            */
+            if (index % 2 !== 0) {
+                return window.location = formatUrl(shortcuts[index])
+            }
         }
-        else if (searchValue == '--shortcuts') {
-            location.href = 'pages/shortcuts/index.html'
-        }
-        else {
-            window.location = `https://www.google.com/search?q=${searchValue}`
-        }
+
+        window.location = formatUrl(searchValue)
     }
 }
 

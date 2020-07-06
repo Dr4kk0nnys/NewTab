@@ -1,19 +1,19 @@
 function getData() {
     const shortcuts = localStorage.getItem('shortcutsDatabase')
 
-    // if there are no shortcuts inside the database ( database is empty ... )
+    // no shortcuts inside the database ( database is empty ... )
     if (!shortcuts) {
         return false
-    } else {
-        return shortcuts.split(',')
     }
+
+    return shortcuts.split(',')
 }
 
 // appends the prefix and the url to the database
 function addData(prefix, url) {
     let shortcuts = localStorage.getItem('shortcutsDatabase')
 
-    // shortcut is null / empty
+    // shortcut's database is null / empty
     if (!shortcuts) {
         const shortcut = [prefix, url]
         localStorage.setItem('shortcutsDatabase', shortcut)
@@ -39,12 +39,11 @@ function loadData() {
                                                               'yt'               'youtube.com'
     */
 
-    if (!shortcutsData)
-        return
+    if (!shortcutsData) return
 
-    // ul element of the HTML page
     const shortcutsList = document.getElementById('shortcuts')
 
+    // appends every shortcut it has found on the database, to the ul list on the HTML body
     for (let i = 0; i < shortcutsData.length; i++) {
         const shortcutValue = `${shortcutsData[i++]} / ${shortcutsData[i]}`
 
@@ -59,6 +58,11 @@ const addShortcutButton = document.getElementById('addShortcut')
 addShortcutButton.addEventListener('click', () => {
     const prefix = prompt('Type the prefix ( the shortcut: "yt"/"fb" )')
     const url = prompt('Type the url ( the full url: "youtube.com"/"facebook.com" )')
+
+    if (!prefix || !url) {
+        alert('Incorrect Use!')
+        return
+    }
 
     addData(prefix, url)
 
