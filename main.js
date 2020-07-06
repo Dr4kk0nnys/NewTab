@@ -83,8 +83,8 @@ class NewTab {
                     * if the url = 'github.com', it goes to github.com, instead of searching for 'github.com' on google
                     * it loops through the array of protocols, and if found any, it's already formatted
                 */
-                const protocols = ['.com', '.net', '.org', '.info', '.gov', '.mil']
-                if (protocols.some(protocol => url.includes(protocol))) {
+                const domains = ['.com', '.net', '.org', '.info', '.gov', '.mil']
+                if (domains.some(domain => url.includes(domain))) {
                     return 'https://' + url
                 }
 
