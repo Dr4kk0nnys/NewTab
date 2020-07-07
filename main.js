@@ -71,7 +71,7 @@ class NewTab {
 
                 /*
                     * - Having trouble with the shortcuts ? - *
-                    * feel free to increment the protocols array with any protocol you want
+                    * feel free to increment the domains array with any domain you want
 
                     * documentation:
                         * https://tools.ietf.org/html/rfc920
@@ -81,9 +81,9 @@ class NewTab {
                         * 
 
                     * if the url = 'github.com', it goes to github.com, instead of searching for 'github.com' on google
-                    * it loops through the array of protocols, and if found any, it's already formatted
+                    * it loops through the array of domains, and if found any, it's already formatted
                 */
-                const domains = ['.com', '.net', '.org', '.info', '.gov', '.mil']
+                const domains = ['.com', '.net', '.org', '.info', '.gov', '.mil', '.io']
                 if (domains.some(domain => url.includes(domain))) {
                     return 'https://' + url
                 }
